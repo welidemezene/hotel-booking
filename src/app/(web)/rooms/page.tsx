@@ -26,11 +26,34 @@ const Rooms = () => {
     return getRooms();
   }
 
-  const { data, error, isLoading } = useSWR('get/hotelRooms', fetchData);
+  const { data, error, isLoading } = useSWR('rooms:list', fetchData);
 
-  if (error) throw new Error('Cannot fetch data');
-  if (typeof data === 'undefined' && !isLoading)
-    throw new Error('Cannot fetch data');
+  if (error) {
+    return (
+      <div className='container mx-auto pt-10 px-4'>
+        <Search
+          roomTypeFilter={roomTypeFilter}
+          searchQuery={searchQuery}
+          setRoomTypeFilter={setRoomTypeFilter}
+          setSearchQuery={setSearchQuery}
+        />
+        <p className='mt-10 text-red-400'>Failed to load rooms. Please try again.</p>
+      </div>
+    );
+  }
+  if (typeof data === 'undefined' && !isLoading) {
+    return (
+      <div className='container mx-auto pt-10 px-4'>
+        <Search
+          roomTypeFilter={roomTypeFilter}
+          searchQuery={searchQuery}
+          setRoomTypeFilter={setRoomTypeFilter}
+          setSearchQuery={setSearchQuery}
+        />
+        <p className='mt-10 text-red-400'>Failed to load rooms. Please try again.</p>
+      </div>
+    );
+  }
 
   const filterRooms = (rooms: Room[]) => {
     return rooms.filter(room => {
@@ -59,15 +82,14 @@ const Rooms = () => {
   const filteredRooms = filterRooms(data || []);
 
   return (
-    <div className='container mx-auto pt-10'>
+    <div className='container mx-auto pt-10 px-2'>
       <Search
         roomTypeFilter={roomTypeFilter}
         searchQuery={searchQuery}
         setRoomTypeFilter={setRoomTypeFilter}
         setSearchQuery={setSearchQuery}
       />
-
-      <div className='flex mt-20 justify-between flex-wrap'>
+      <div className='grid gap-y-10 gap-x-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-12 justify-items-center'>
         {filteredRooms.map(room => (
           <RoomCard key={room._id} room={room} />
         ))}

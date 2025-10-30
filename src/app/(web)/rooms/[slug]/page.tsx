@@ -28,11 +28,11 @@ const RoomDetails = (props: { params: { slug: string } }) => {
 
   const fetchRoom = async () => getRoom(slug);
 
-  const { data: room, error, isLoading } = useSWR('/api/room', fetchRoom);
+  const { data: room, error, isLoading } = useSWR(['room', slug], fetchRoom);
 
-  if (error) throw new Error('Cannot fetch data');
+  if (error) return <div className='container mx-auto p-6'>Failed to load room details.</div>;
   if (typeof room === 'undefined' && !isLoading)
-    throw new Error('Cannot fetch data');
+    return <div className='container mx-auto p-6'>Failed to load room details.</div>;
 
   if (!room) return <LoadingSpinner />;
 

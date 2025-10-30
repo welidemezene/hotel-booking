@@ -46,7 +46,7 @@ const RatingModal: FC<Props> = props => {
             {starValues.map(value => (
               <button
                 className={`w-6 h-6 ${
-                  ratingValue === value ? 'text-yellow-500' : 'text-gray-300'
+                  ratingValue === value ? 'text-blue-400' : 'text-gray-300'
                 }`}
                 onClick={() => setRatingValue(value)}
                 key={value}
