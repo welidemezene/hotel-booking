@@ -57,6 +57,7 @@ const FeaturedRoom: FC<Props> = props => {
         </div>
         <Link
           href={`/rooms/${featuredRoom.slug.current}`}
+          prefetch={true}
           className="mt-2 inline-flex items-center gap-2 bg-gradient-to-tr from-blue-800 via-blue-600 to-blue-400 hover:from-blue-900 hover:to-blue-600 text-white text-xl font-bold rounded-xl px-8 py-3 shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-200 focus:outline-none w-full sm:w-auto justify-center"
         >
           More Details

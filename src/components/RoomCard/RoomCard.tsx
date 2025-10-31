@@ -48,6 +48,7 @@ const RoomCard: FC<Props> = ({ room }) => {
         <p className="text-sm text-gray-300 font-light overflow-hidden whitespace-nowrap text-ellipsis">{description?.slice(0, 80)}...</p>
         <Link
           href={`/rooms/${slug.current}`}
+          prefetch={true}
           className={`mt-4 w-full py-3 text-lg font-bold rounded-xl 
             ${isBooked ? 'bg-gray-700 text-gray-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'}
             transition duration-300 shadow-lg text-center tracking-wide`

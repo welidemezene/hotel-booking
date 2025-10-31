@@ -23,7 +23,8 @@ const darkLogo = (
 );
 
 const Header = () => {
-  const { darkTheme, setDarkTheme } = useContext(ThemeContext);
+  const themeContext = useContext(ThemeContext);
+  const { darkTheme, setDarkTheme } = themeContext || { darkTheme: false, setDarkTheme: () => {} };
   const { data: session } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,7 +33,7 @@ const Header = () => {
       <nav className="container mx-auto flex items-center justify-between py-6 px-4 relative">
         {/* LEFT: Logo */}
         <div className="hidden md:flex items-center md:ml-2 justify-start md:min-w-[170px]">
-          <Link href="/">
+          <Link href="/" prefetch={true}>
             <span aria-label="Addis Amba Logo">{darkTheme ? darkLogo : lightLogo}</span>
           </Link>
         </div>
@@ -50,11 +51,11 @@ const Header = () => {
         <div className="hidden md:flex flex-1 justify-end items-center gap-5">
           {/* Home and Room links */}
           <ul className="flex gap-6 font-semibold text-gray-700 dark:text-blue-100 text-lg">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/rooms">Room</Link></li>
+            <li><Link href="/" prefetch={true}>Home</Link></li>
+            <li><Link href="/rooms" prefetch={true}>Room</Link></li>
           </ul>
           {/* Account button: icon/image + 'Account' */}
-          <Link href={session?.user ? `/users/${session.user.id}` : '/auth'}>
+          <Link href={session?.user ? `/users/${session.user.id}` : '/auth'} prefetch={true}>
             <button className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gray-900/60 hover:bg-blue-700 text-gray-100 font-semibold shadow transition">
               {session?.user?.image ? (
                 <Image src={session.user.image} alt={session.user.name ?? 'Account'} width={32} height={32} className="w-8 h-8 rounded-full border-2 border-blue-600" />
@@ -73,14 +74,14 @@ const Header = () => {
             )}
           </span>
           {/* Book Now at right */}
-          <Link href="/booking">
+          <Link href="/booking" prefetch={true}>
             <button className="ml-1 bg-blue-600 hover:bg-blue-700 transition text-white font-semibold px-7 py-2 rounded-full shadow-lg text-base whitespace-nowrap">Book Now</button>
           </Link>
         </div>
 
         {/* Mobile: only logo and hamburger visible */}
         <div className="flex md:hidden flex-1 items-center justify-between w-full">
-          <Link href="/" aria-label="Luxe Vue Logo">{darkTheme ? darkLogo : lightLogo}</Link>
+          <Link href="/" prefetch={true} aria-label="Addis Amba Logo">{darkTheme ? darkLogo : lightLogo}</Link>
           <button onClick={() => setMenuOpen(true)} aria-label="Open menu">
             <FaBars className="text-2xl text-blue-600" />
           </button>
@@ -100,11 +101,11 @@ const Header = () => {
           <ul className="flex flex-col mt-10 gap-6 px-7 font-semibold text-lg">
             {NAV_LINKS.map(link => (
               <li key={link.href}>
-                <Link href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
+                <Link href={link.href} prefetch={true} onClick={() => setMenuOpen(false)}>{link.label}</Link>
               </li>
             ))}
             <li>
-              <Link href="/booking" onClick={() => setMenuOpen(false)}>
+              <Link href="/booking" prefetch={true} onClick={() => setMenuOpen(false)}>
                 <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-0 py-3 rounded-full shadow-lg text-base font-bold">Book Now</button>
               </Link>
             </li>
@@ -118,10 +119,10 @@ const Header = () => {
             )}</span>
             {/* Account/Profile */}
             <span>{session?.user ? (
-              <Link href={`/users/${session.user.id}`}>{session.user.image ? (
+              <Link href={`/users/${session.user.id}`} prefetch={true}>{session.user.image ? (
                 <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-600"><Image src={session.user.image} alt={session.user.name!} width={36} height={36} /></div>
               ) : (<FaUserCircle className="cursor-pointer hover:text-blue-400" />)}</Link>
-            ) : <Link href="/auth"><FaUserCircle className="cursor-pointer hover:text-blue-400" /></Link>}</span>
+            ) : <Link href="/auth" prefetch={true}><FaUserCircle className="cursor-pointer hover:text-blue-400" /></Link>}</span>
           </div>
         </div>
         {menuOpen && <div onClick={() => setMenuOpen(false)} className="fixed inset-0 bg-black/30 z-[9990] transition-opacity"></div>}

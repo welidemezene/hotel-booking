@@ -9,7 +9,7 @@ export const heading1 = (
     <p className="max-w-2xl mb-10 text-lg lg:text-2xl font-light text-blue-200">
       Welcome to a sanctuary of elegance and indulgence. Unwind in refined luxury, where every stay is a curated experience of comfort and style.
     </p>
-    <Link href="/booking">
+    <Link href="/booking" prefetch={true}>
       <button className="bg-blue-600 hover:bg-blue-700 text-lg font-bold px-8 py-4 rounded-full shadow-lg uppercase tracking-wide transition">Book Now</button>
     </Link>
   </div>
