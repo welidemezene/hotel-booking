@@ -94,10 +94,47 @@ const Header = () => {
           }
           style={{ transitionProperty: 'transform' }}
         >
-          {/* Only show close icon, no logo here! */}
-          <div className="flex justify-end items-center px-5 py-6 border-b border-gray-300 dark:border-gray-700">
-            <button onClick={() => setMenuOpen(false)} aria-label="Close menu"><FaTimes className="text-2xl text-blue-600" /></button>
+          {/* Header: Account/Theme on left, Close button on right */}
+          <div className="flex justify-between items-center px-5 py-6 border-b border-gray-300 dark:border-gray-700">
+            {/* Top Left: Account and Theme Toggle */}
+            <div className="flex items-center gap-3">
+              {/* Account */}
+              {session?.user ? (
+                <Link href={`/users/${session.user.id}`} prefetch={true} onClick={() => setMenuOpen(false)}>
+                  {session.user.image ? (
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600">
+                      <Image src={session.user.image} alt={session.user.name!} width={40} height={40} />
+                    </div>
+                  ) : (
+                    <FaUserCircle className="text-2xl text-blue-600 cursor-pointer" />
+                  )}
+                </Link>
+              ) : (
+                <Link href="/auth" prefetch={true} onClick={() => setMenuOpen(false)}>
+                  <FaUserCircle className="text-2xl text-blue-600 cursor-pointer" />
+                </Link>
+              )}
+              {/* Theme Toggle */}
+              {darkTheme ? (
+                <MdOutlineLightMode 
+                  className="cursor-pointer text-2xl text-blue-600 hover:text-blue-400" 
+                  aria-label="Light theme" 
+                  onClick={() => { setDarkTheme(false); localStorage.removeItem('hotel-theme'); }} 
+                />
+              ) : (
+                <MdDarkMode 
+                  className="cursor-pointer text-2xl text-blue-600 hover:text-blue-300" 
+                  aria-label="Dark theme" 
+                  onClick={() => { setDarkTheme(true); localStorage.setItem('hotel-theme', 'true'); }} 
+                />
+              )}
+            </div>
+            {/* Top Right: Close Button */}
+            <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
+              <FaTimes className="text-2xl text-blue-600" />
+            </button>
           </div>
+          {/* Navigation Links */}
           <ul className="flex flex-col mt-10 gap-6 px-7 font-semibold text-lg">
             {NAV_LINKS.map(link => (
               <li key={link.href}>
@@ -110,20 +147,6 @@ const Header = () => {
               </Link>
             </li>
           </ul>
-          <div className="px-7 pt-12 flex gap-4 text-2xl text-gray-600 dark:text-blue-100 mt-auto">
-            {/* Theme toggle */}
-            <span>{darkTheme ? (
-              <MdOutlineLightMode className="cursor-pointer hover:text-blue-400" aria-label="Light theme" onClick={() => { setDarkTheme(false); localStorage.removeItem('hotel-theme'); }} />
-            ) : (
-              <MdDarkMode className="cursor-pointer hover:text-blue-300" aria-label="Dark theme" onClick={() => { setDarkTheme(true); localStorage.setItem('hotel-theme', 'true'); }} />
-            )}</span>
-            {/* Account/Profile */}
-            <span>{session?.user ? (
-              <Link href={`/users/${session.user.id}`} prefetch={true}>{session.user.image ? (
-                <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-600"><Image src={session.user.image} alt={session.user.name!} width={36} height={36} /></div>
-              ) : (<FaUserCircle className="cursor-pointer hover:text-blue-400" />)}</Link>
-            ) : <Link href="/auth" prefetch={true}><FaUserCircle className="cursor-pointer hover:text-blue-400" /></Link>}</span>
-          </div>
         </div>
         {menuOpen && <div onClick={() => setMenuOpen(false)} className="fixed inset-0 bg-black/30 z-[9990] transition-opacity"></div>}
       </nav>
