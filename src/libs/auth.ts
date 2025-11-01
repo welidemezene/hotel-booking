@@ -40,9 +40,9 @@ export const authOptions: NextAuthOptions = {
       // Persist the OAuth account info and user info to the token right after signin
       if (user) {
         token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
-        token.picture = user.image;
+        token.email = user.email ?? undefined;
+        token.name = user.name ?? undefined;
+        token.picture = user.image ?? undefined;
       }
       
       // Fetch user ID from Sanity if not already in token
