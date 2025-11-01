@@ -34,12 +34,13 @@ const Auth = () => {
   };
 
   return (
-    <section className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 px-4 py-12'>
-      <div className='w-full max-w-md'>
-        <div className='bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 md:p-12'>
+    <section className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 px-4 py-12 relative overflow-hidden'>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 dark:from-blue-500/20 dark:via-purple-500/20 dark:to-pink-500/20"></div>
+      <div className='w-full max-w-md relative z-10'>
+        <div className='bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100 dark:border-gray-700'>
           {/* Header */}
           <div className='text-center mb-10'>
-            <h1 className='text-4xl font-bold text-gray-900 dark:text-white mb-3'>
+            <h1 className='text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent'>
               Welcome to Addis Amba
             </h1>
             <p className='text-gray-600 dark:text-gray-300 text-lg'>

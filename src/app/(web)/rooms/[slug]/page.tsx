@@ -30,9 +30,21 @@ const RoomDetails = (props: { params: { slug: string } }) => {
 
   const { data: room, error, isLoading } = useSWR(['room', slug], fetchRoom);
 
-  if (error) return <div className='container mx-auto p-6'>Failed to load room details.</div>;
+  if (error) return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 flex items-center justify-center">
+      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center max-w-md mx-4">
+        <p className='text-red-600 dark:text-red-400 text-lg font-semibold'>Failed to load room details.</p>
+      </div>
+    </div>
+  );
   if (typeof room === 'undefined' && !isLoading)
-    return <div className='container mx-auto p-6'>Failed to load room details.</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 flex items-center justify-center">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center max-w-md mx-4">
+          <p className='text-red-600 dark:text-red-400 text-lg font-semibold'>Failed to load room details.</p>
+        </div>
+      </div>
+    );
 
   if (!room) return <LoadingSpinner />;
 
@@ -91,78 +103,78 @@ const RoomDetails = (props: { params: { slug: string } }) => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
       <HotelPhotoGallery photos={room.images || []} />
 
-      <div className='container mx-auto mt-20'>
-        <div className='md:grid md:grid-cols-12 gap-10 px-3'>
+      <div className='container mx-auto mt-12 md:mt-20 px-4'>
+        <div className='md:grid md:grid-cols-12 gap-8 md:gap-10'>
           <div className='md:col-span-8 md:w-full'>
-            <div>
-              <h2 className='font-bold text-left text-lg md:text-2xl'>
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-6 md:p-8 border border-gray-100 dark:border-gray-700">
+              <h2 className='font-bold text-left text-2xl md:text-3xl mb-6 text-gray-800 dark:text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent'>
                 {room.name} ({room.dimension})
               </h2>
-              <div className='flex my-11'>
+              <div className='flex flex-wrap gap-3 my-8'>
                 {(room.offeredAmenities || []).map(amenity => (
                   <div
                     key={amenity._key}
-                    className='md:w-44 w-fit text-center px-2 md:px-0 h-20 md:h-40 mr-3 bg-[#eff0f2] dark:bg-gray-800 rounded-lg grid place-content-center'
+                    className='text-center px-4 py-3 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-100 dark:border-blue-800 shadow-sm hover:shadow-md transition-shadow'
                   >
-                    <i className={`fa-solid ${amenity.icon} md:text-2xl`}></i>
-                    <p className='text-xs md:text-base pt-3'>
+                    <i className={`fa-solid ${amenity.icon} text-xl md:text-2xl text-blue-600 dark:text-blue-400`}></i>
+                    <p className='text-xs md:text-sm pt-2 text-gray-700 dark:text-gray-300 font-medium'>
                       {amenity.amenity}
                     </p>
                   </div>
                 ))}
               </div>
-              <div className='mb-11'>
-                <h2 className='font-bold text-3xl mb-2'>Description</h2>
-                <p>{room.description}</p>
+              <div className='mb-8'>
+                <h2 className='font-bold text-2xl md:text-3xl mb-4 text-gray-800 dark:text-white'>Description</h2>
+                <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>{room.description}</p>
               </div>
-              <div className='mb-11'>
-                <h2 className='font-bold text-3xl mb-2'>Offered Amenities</h2>
-                <div className='grid grid-cols-2'>
+              <div className='mb-8'>
+                <h2 className='font-bold text-2xl md:text-3xl mb-4 text-gray-800 dark:text-white'>Offered Amenities</h2>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
                   {(room.offeredAmenities || []).map(amenity => (
                     <div
                       key={amenity._key}
-                      className='flex items-center md:my-0 my-1'
+                      className='flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg'
                     >
-                      <i className={`fa-solid ${amenity.icon}`}></i>
-                      <p className='text-xs md:text-base ml-2'>
+                      <i className={`fa-solid ${amenity.icon} text-blue-600 dark:text-blue-400`}></i>
+                      <p className='text-sm md:text-base ml-3 text-gray-700 dark:text-gray-300'>
                         {amenity.amenity}
                       </p>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className='mb-11'>
-                <h2 className='font-bold text-3xl mb-2'>Safety And Hygiene</h2>
-                <div className='grid grid-cols-2'>
-                  <div className='flex items-center my-1 md:my-0'>
-                    <MdOutlineCleaningServices />
-                    <p className='ml-2 md:text-base text-xs'>Daily Cleaning</p>
+              <div className='mb-8'>
+                <h2 className='font-bold text-2xl md:text-3xl mb-4 text-gray-800 dark:text-white'>Safety And Hygiene</h2>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                  <div className='flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg'>
+                    <MdOutlineCleaningServices className="text-blue-600 dark:text-blue-400 text-xl" />
+                    <p className='ml-3 text-sm md:text-base text-gray-700 dark:text-gray-300'>Daily Cleaning</p>
                   </div>
-                  <div className='flex items-center my-1 md:my-0'>
-                    <LiaFireExtinguisherSolid />
-                    <p className='ml-2 md:text-base text-xs'>
+                  <div className='flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg'>
+                    <LiaFireExtinguisherSolid className="text-blue-600 dark:text-blue-400 text-xl" />
+                    <p className='ml-3 text-sm md:text-base text-gray-700 dark:text-gray-300'>
                       Fire Extinguishers
                     </p>
                   </div>
-                  <div className='flex items-center my-1 md:my-0'>
-                    <AiOutlineMedicineBox />
-                    <p className='ml-2 md:text-base text-xs'>
+                  <div className='flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg'>
+                    <AiOutlineMedicineBox className="text-blue-600 dark:text-blue-400 text-xl" />
+                    <p className='ml-3 text-sm md:text-base text-gray-700 dark:text-gray-300'>
                       Disinfections and Sterilizations
                     </p>
                   </div>
-                  <div className='flex items-center my-1 md:my-0'>
-                    <GiSmokeBomb />
-                    <p className='ml-2 md:text-base text-xs'>Smoke Detectors</p>
+                  <div className='flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg'>
+                    <GiSmokeBomb className="text-blue-600 dark:text-blue-400 text-xl" />
+                    <p className='ml-3 text-sm md:text-base text-gray-700 dark:text-gray-300'>Smoke Detectors</p>
                   </div>
                 </div>
               </div>
 
-              <div className='shadow dark:shadow-white rounded-lg p-6'>
+              <div className='bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl shadow-lg p-6 border border-blue-100 dark:border-gray-700'>
                 <div className='items-center mb-4'>
-                  <p className='md:text-lg font-semibold'>Customer Reviews</p>
+                  <p className='text-lg md:text-xl font-bold text-gray-800 dark:text-white'>Customer Reviews</p>
                 </div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                   <RoomReview roomId={room._id} />
@@ -171,23 +183,25 @@ const RoomDetails = (props: { params: { slug: string } }) => {
             </div>
           </div>
 
-          <div className='md:col-span-4 rounded-xl shadow-lg dark:shadow dark:shadow-white sticky top-10 h-fit overflow-auto'>
-            <BookRoomCta
-              discount={room.discount}
-              price={room.price}
-              specialNote={room.specialNote}
-              checkinDate={checkinDate}
-              setCheckinDate={setCheckinDate}
-              checkoutDate={checkoutDate}
-              setCheckoutDate={setCheckoutDate}
-              calcMinCheckoutDate={calcMinCheckoutDate}
-              adults={adults}
-              noOfChildren={noOfChildren}
-              setAdults={setAdults}
-              setNoOfChildren={setNoOfChildren}
-              isBooked={room.isBooked}
-              handleBookNowClick={handleBookNowClick}
-            />
+          <div className='md:col-span-4'>
+            <div className='bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 sticky top-10 overflow-hidden'>
+              <BookRoomCta
+                discount={room.discount}
+                price={room.price}
+                specialNote={room.specialNote}
+                checkinDate={checkinDate}
+                setCheckinDate={setCheckinDate}
+                checkoutDate={checkoutDate}
+                setCheckoutDate={setCheckoutDate}
+                calcMinCheckoutDate={calcMinCheckoutDate}
+                adults={adults}
+                noOfChildren={noOfChildren}
+                setAdults={setAdults}
+                setNoOfChildren={setNoOfChildren}
+                isBooked={room.isBooked}
+                handleBookNowClick={handleBookNowClick}
+              />
+            </div>
           </div>
         </div>
       </div>

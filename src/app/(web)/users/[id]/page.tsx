@@ -83,8 +83,10 @@ const UserDetails = (props: { params: { id: string } }) => {
 
   if (error || errorGettingUserData) {
     return (
-      <div className='container mx-auto p-6'>
-        <p className='text-red-500'>Failed to load user data. Please try again.</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 flex items-center justify-center">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center max-w-md mx-4">
+          <p className='text-red-600 dark:text-red-400 text-lg font-semibold'>Failed to load user data. Please try again.</p>
+        </div>
       </div>
     );
   }
@@ -93,16 +95,19 @@ const UserDetails = (props: { params: { id: string } }) => {
 
   if (!userData) {
     return (
-      <div className='container mx-auto p-6'>
-        <p className='text-red-500'>User data not found.</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 flex items-center justify-center">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center max-w-md mx-4">
+          <p className='text-red-600 dark:text-red-400 text-lg font-semibold'>User data not found.</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className='container mx-auto px-2 md:px-4 py10'>
-      <div className='grid md:grid-cols-12 gap-10'>
-        <div className='hidden md:block md:col-span-4 lg:col-span-3 shadow-lg h-fit sticky top-10 bg-[#eff0f2] text-black rounded-lg px-6 py-4'>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
+      <div className='container mx-auto px-2 md:px-4 py-10'>
+        <div className='grid md:grid-cols-12 gap-8 md:gap-10'>
+        <div className='hidden md:block md:col-span-4 lg:col-span-3 shadow-xl h-fit sticky top-10 bg-white dark:bg-gray-800 text-black dark:text-white rounded-3xl px-6 py-6 border border-gray-100 dark:border-gray-700'>
           {userData.image && (
             <div className='md:w-[143px] w-28 h-28 md:h-[143px] mx-auto mb-5 rounded-full overflow-hidden'>
               <Image
@@ -131,38 +136,40 @@ const UserDetails = (props: { params: { id: string } }) => {
         </div>
 
         <div className='md:col-span-8 lg:col-span-9'>
-          <div className='flex items-center'>
-            <h5 className='text-2xl font-bold mr-3'>Hello, {userData.name}</h5>
-          </div>
-          {userData.image && (
-            <div className='md:hidden w-14 h-14 rounded-l-full overflow-hidden'>
-              <Image
-                className='img scale-animation rounded-full'
-                width={56}
-                height={56}
-                src={userData.image}
-                alt={userData.name || 'User'}
+          <div className='bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-6 md:p-8 border border-gray-100 dark:border-gray-700 mb-6'>
+            <div className='flex items-center'>
+              <h5 className='text-2xl md:text-3xl font-bold mr-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent'>Hello, {userData.name}</h5>
+            </div>
+            {userData.image && (
+              <div className='md:hidden w-14 h-14 rounded-l-full overflow-hidden mt-4'>
+                <Image
+                  className='img scale-animation rounded-full'
+                  width={56}
+                  height={56}
+                  src={userData.image}
+                  alt={userData.name || 'User'}
+                />
+              </div>
+            )}
+            <p className='block w-fit md:hidden text-sm py-2'>
+              {userData.about ?? ''}
+            </p>
+
+            {userData._createdAt && (
+              <p className='text-xs py-2 font-medium'>
+                Joined In {userData._createdAt.split('T')[0]}
+              </p>
+            )}
+            <div className='md:hidden flex items-center my-2'>
+              <p className='mr-2'>Sign out</p>
+              <FaSignOutAlt
+                className='text-3xl cursor-pointer'
+                onClick={() => signOut({ callbackUrl: '/' })}
               />
             </div>
-          )}
-          <p className='block w-fit md:hidden text-sm py-2'>
-            {userData.about ?? ''}
-          </p>
-
-          {userData._createdAt && (
-            <p className='text-xs py-2 font-medium'>
-              Joined In {userData._createdAt.split('T')[0]}
-            </p>
-          )}
-          <div className='md:hidden flex items-center my-2'>
-            <p className='mr-2'>Sign out</p>
-            <FaSignOutAlt
-              className='text-3xl cursor-pointer'
-              onClick={() => signOut({ callbackUrl: '/' })}
-            />
           </div>
 
-          <nav className='sticky top-0 px-2 w-fit mx-auto md:w-full md:px-5 py-3 mb-8 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 mt-7'>
+          <nav className='sticky top-0 px-2 w-fit mx-auto md:w-full md:px-5 py-3 mb-8 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-lg mt-7'>
             <ol
               className={`${
                 currentNav === 'bookings' ? 'text-blue-600' : 'text-gray-700'
@@ -212,6 +219,7 @@ const UserDetails = (props: { params: { id: string } }) => {
           ) : (
             <></>
           )}
+        </div>
         </div>
       </div>
 

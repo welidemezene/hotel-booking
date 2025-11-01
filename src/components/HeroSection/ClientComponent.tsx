@@ -11,10 +11,10 @@ interface HeroProps {
 const heading = (
   <div className="z-10 relative flex flex-col items-start justify-center px-5 py-24 w-full max-w-3xl">
     <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-extrabold leading-tight mb-8 drop-shadow-lg text-white">
-      Experience Luxe Hospitality
+      Discover Timeless Luxury at Addis Amba
     </h1>
     <p className="mb-10 text-base sm:text-lg md:text-2xl font-light text-blue-200 max-w-xl">
-      Welcome to a sanctuary of elegance and indulgence. Unwind in refined luxury, where every stay is a curated experience of comfort and style.
+      Welcome to Addis Amba, where sophistication meets comfort. Experience a sanctuary of peace, elegance, and hospitality designed to make every moment unforgettable.
     </p>
     <Link href="/booking" prefetch={true}>
       <button className="bg-blue-600 hover:bg-blue-700 text-lg font-bold px-8 py-4 rounded-full shadow-lg uppercase tracking-wide transition">Book Now</button>
@@ -30,7 +30,7 @@ const ClientComponent: React.FC<HeroProps> = ({ images }) => {
   const next = () => setActive((active + 1) % total);
 
   return (
-    <section className="relative flex items-center justify-center min-h-[430px] md:min-h-[550px] overflow-hidden">
+    <section className="relative flex items-center justify-center min-h-[550px] md:min-h-[700px] lg:min-h-[800px] overflow-hidden">
       {/* Carousel Images */}
       {images.map((src, idx) => (
         <div
